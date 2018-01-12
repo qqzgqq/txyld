@@ -1,0 +1,149 @@
+<html>
+    <head>
+        <title>test</title>
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/bootstrap.js"></script>
+        <script src="/static/js/guang.js"></script>
+        <link href="http://cdn.bootcss.com/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/guang.css">
+        <link href="/static/css/datetimepicker.css" rel="stylesheet">
+        <!-- 叫网页角标 -->
+        <link rel="shortcut icon" type="image/ico" href="/static/img/1.jpg">         
+
+    </head>
+
+    <body style="background:#ffffff2d">   
+        <div class="container-fluid" style="padding-left: 65px;">
+            <div class="row-fluid">
+                <div class="span12">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="/question_list?qunaye=">首页</a>
+                        </li>
+                        <li>
+                            <a href="/question_moban">问题描述</a>
+                        </li>
+                        <li>
+                            <a href="#">查询</a>
+                        </li>
+                        <li class="dropdown pull-right">
+                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">用户<strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">退出</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <table border="0">
+            <td>
+                   
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   
+            </td>
+            <td>
+                <div>
+                        <div class="container-fluid">
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr style="background-color:bisque">
+                                                    <th>
+                                                        编号
+                                                    </th>
+                                                    <th>
+                                                        问题列表
+                                                    </th>
+                                                    <th>
+                                                        问题地点
+                                                    </th>
+                                                    <th>
+                                                        问题类型
+                                                    </th>
+                                                    <th>
+                                                        发生次数
+                                                    </th>
+                                                    <th>
+                                                        操作
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    {{range .question_xianshi}}
+                                                <tr class="warning">
+                                                    <td>
+                                                            {{.IDmoban}}
+                                                    </td>
+                                                    <td>
+                                                            {{.QuestionList}}
+                                                    </td>
+                                                    <td>
+                                                            {{.PlaceList}}
+                                                    </td>
+                                                    <td>
+                                                            {{.QuestiontypeList}}
+                                                    </td>
+                                                    <td>
+                                                            {{.CountList}}
+                                                    </td>
+                                                    <td><a href="/delete?delid={{.IDmoban}}">删除</a></td>
+                                                </tr>
+                                                {{end}}
+                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                </div>
+                    
+            </td> 
+            </table>
+            <div>
+                aaaaaaaaaaaaaaaaaaaaaa
+            </div>
+            <div>
+                <form action="/insert_moban" method="post">
+                    <tr>
+                            
+                                    <textarea name="qtlbmb" id="" cols="20" rows="1"></textarea>
+                            
+                    </tr>
+                    <tr>
+                           
+                                    <input type="text" name="qtddmb">
+                          
+                    </tr>
+                    <tr>
+                                    <input type="text" name="wtlx">
+                    </tr>
+                    <tr>
+                                    <input type="text" name="fscs">
+                    </tr>
+                    <tr>
+                                    <button type="submit" class="btn">插入</button>
+                    </tr>
+                    
+                </form>
+            </div>
+                
+           
+        
+              
+        </table>
+
+
+
+
+       
+
+
+    </body>
+</html>

@@ -1,0 +1,232 @@
+<html>
+    <head>
+        <title>test</title>
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/bootstrap.js"></script>
+        <script src="/static/js/bootstrap-datetimepicker.min.js"></script>
+        <link href="http://cdn.bootcss.com/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/guang.css">
+        <link href="/static/css/datetimepicker.css" rel="stylesheet">
+        <!-- 叫网页角标 -->
+        <link rel="shortcut icon" type="image/ico" href="/static/img/1.jpg">         
+
+    </head>
+
+    <body style="background:#ffffff2d">   
+
+                        <div class="container-fluid" style="padding-left: 65px;" >
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active">
+                                                <a href="/question_list?qunaye=">首页</a>
+                                            </li>
+                                            <li>
+                                                <a href="/question_moban">问题描述</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">查询</a>
+                                            </li>
+                                            <li class="dropdown pull-right">
+                                                 <a href="#" data-toggle="dropdown" class="dropdown-toggle">用户<strong class="caret"></strong></a>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a href="#">退出</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+ <table border="0">
+         <td>
+                               
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                               
+         </td>
+        <td>
+
+        <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr style="background-color:bisque">
+                                    <th>
+                                        编号
+                                    </th>
+                                    <th>
+                                        开始时间
+                                    </th>
+                                    <th>
+                                        结束时间
+                                    </th>
+                                    <th>
+                                        问题描述
+                                    </th>
+                                    <th>
+                                        问题地点
+                                    </th>
+                                    <th>
+                                        问题类型
+                                    </th>
+                                    <th>
+                                        出现次数
+                                    </th>
+                                    <th>
+                                        处理时间
+                                    </th>
+                                    <th>
+                                        备注
+                                    </th>
+                                    <th>
+                                        操作
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    {{range .sqll}}
+                                    <tr class="warning">
+                                            
+                                            <td>{{.IDsql}}</td>
+                                            <td>{{.Starttime}}</td>
+                                            <td>{{.Endtime}}</td>
+                                            <td>{{.Question}}</td>
+                                            <td>{{.Place}}</td>
+                                            <td>{{.Questiontype}}</td>
+                                            <td>{{.Count}}</td>
+                                            <td>{{.Solvetime}}</td>
+                                            <td>{{.Note}}</td>                     
+                                            <td>
+                                                <a href="/delete?deleteid_l={{.IDsql}}">删除</a>
+                                           </td>
+                                    </tr>
+                                    {{end}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+    </td>
+</table>
+       <table border="0">
+            <td>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </td>
+            <td>
+                    <div>
+                            <!-- <a href="/first_y?firsty={{.firsty}}" class="btn">第一页</a> -->
+                            {{range $a,$b:= .sqlnum}}
+                            <a href="/question_list?qunaye={{$b}}" class="btn btn-mini">{{$b}}</a>
+                            {{end}}
+                        </div>
+            </td>
+       </table>
+        
+     
+                            <form class="form-horizontal" action="../insert" method="post">
+                                <table>
+                                    <tr>
+                                        <td>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </td>
+                                        <td>开始时间</td>
+                                        <td>结束时间</td>
+                                        <td>问题描述</td>
+                                        <td>问题地点</td>
+                                        <td>问题类型</td>
+                                        <td>出现次数</td>
+                                    
+                                        <td>问题备注</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </td>
+
+                                        <td>
+                                                <div class="input-append date form_datetime">
+                                                        <input size="16" type="text" value="{{.starttime}}" name="starttime"  style="width: 130px;height: 30px;">
+                                                        <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                        </td>
+                                        <td>
+                                                <div class="input-append date form_datetime">
+                                                        <input size="16" type="text" value="{{.endtime}}" name="endtime"  style="width: 130px;height: 30px;">
+                                                        <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                        </td>
+                                        <td>
+                                               
+                                                 <select name="question" style="width: 200px;">
+                                                      {{range .question_list}}
+                                                      <option value="{{.QuestionList}}">{{.QuestionList}}</option>
+                                                      {{end}}
+                                                </select>
+                                        
+                                        </td>
+                                        <td>
+                                             <select name="place" style="width: 100px;">
+                                               
+                                                {{range .place_list}}
+                                                <option value="{{.PlaceList}}">{{.PlaceList}}</option>
+                                                {{end}}
+                                            </select>
+                                        </td>
+                                        <td>
+                                                <select name="questiontype" style="width: 100px;">
+                                                  
+                                                   {{range .questiontype_list}}
+                                                   <option value="{{.QuestiontypeList}}">{{.QuestiontypeList}}</option>
+                                                   {{end}}
+                                               </select>
+                                        </td>
+                                        <td>
+                                                <select name="count" style="width: 100px;">
+                                                  
+                                                   {{range .count_list}}
+                                                   <option value="{{.CountList}}">{{.CountList}}</option>
+                                                   {{end}}
+                                               </select>
+                                        </td>
+                                      
+                                        <td>
+                                            <input type="text" name="note" style="height: 30px;">
+                                        </td>
+                                        <td>
+                                                &nbsp;&nbsp;&nbsp;
+                                        </td>
+                                        <td>
+                                                <button type="submit" class="btn">确认</button>
+                                        </td>
+                                    </tr>
+                                   
+                                    
+
+                                    
+
+                                </table>
+                   
+                            </form>
+         
+       
+                         
+                           
+        
+
+
+        <script type="text/javascript">
+            $(".form_datetime").datetimepicker({
+                linkFormat: "yyyy-mm-dd hh:ii",
+                autoclose: true,
+                todayBtn: true,
+                pickerPosition: "bottom-left"
+            });
+        </script> 
+    </body>
+</html>
