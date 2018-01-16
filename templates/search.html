@@ -1,0 +1,126 @@
+<html>
+    <head>
+        <title>test</title>
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/bootstrap.js"></script>
+        <script src="/static/js/guang.js"></script>
+        <link href="http://cdn.bootcss.com/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/guang.css">
+        <link href="/static/css/datetimepicker.css" rel="stylesheet">
+        <!-- 叫网页角标 -->
+        <link rel="shortcut icon" type="image/ico" href="/static/img/1.jpg">         
+
+    </head>
+
+    <body style="background:#ffffff2d">   
+            <div class="container-fluid" style="padding-left: 65px;" >
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="/question_list?qunaye=" style="font-weight:bold">首页</a>
+                                </li>
+                                <li>
+                                    <a href="/question_moban">问题描述</a>
+                                </li>
+                               <li>
+                                    <div class="container-fluid">
+                                            <div class="row-fluid">
+                                                <div class="span12">
+                                                    <form class="form-search" >
+                                                        <input class="input-medium search-query" type="text" placeholder="问题描述" name="search_nr"/> <button type="submit" class="btn btn-small" >查找</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                               </li>
+                                   
+                                <li class="dropdown pull-right">
+                                     <a href="#" data-toggle="dropdown" class="dropdown-toggle">用户<strong class="caret"></strong></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="/static/login.html">退出</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li  class="dropdown pull-right">
+                                        <img alt="140x140" src="/static/img/22.jpeg" class="img-circle" style="width: 50px;"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+           
+
+                <table border="0">
+                    <td>
+                           
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                           
+                    </td>
+                    <td>
+            <div>
+                    <div class="container-fluid">
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                            <tr style="background-color:bisque">
+                                                <th>
+                                                    编号
+                                                </th>
+                                                <th>
+                                                    开始时间
+                                                </th>
+                                                <th>
+                                                    结束时间
+                                                </th>
+                                                <th>
+                                                    问题描述
+                                                </th>
+                                                <th>
+                                                    问题地点
+                                                </th>
+                                                <th>
+                                                    问题类型
+                                                </th>
+                                                <th>
+                                                    出现次数
+                                                </th>
+                                                <th>
+                                                    处理时间
+                                                </th>
+                                                <th>
+                                                    备注
+                                                </th>
+                                              
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                {{range .search_list}}
+                                                <tr class="warning">
+                                                        
+                                                        <td>{{.IDsql}}</td>
+                                                        <td>{{.Starttime}}</td>
+                                                        <td>{{.Endtime}}</td>
+                                                        <td>{{.Question}}</td>
+                                                        <td>{{.Place}}</td>
+                                                        <td>{{.Questiontype}}</td>
+                                                        <td>{{.Count}}</td>
+                                                        <td>{{.Solvetime}}</td>
+                                                        <td>{{.Note}}</td>                     
+                                                        
+                                                </tr>
+                                                {{end}}
+            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+                    </td>
+                </table>
+               
+    </body>
+</html>

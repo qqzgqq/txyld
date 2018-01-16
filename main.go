@@ -46,7 +46,7 @@ func main() {
 	app.Get("/question_list", func(ctx iris.Context) {
 		var page float64
 		db.Get(&page, "SELECT count(*) FROM txlyd ")
-		xsys := 3.0
+		xsys := 10.0
 		zxsys := math.Ceil(page / xsys)
 		zxsZ := int(zxsys)
 		var aaa []int
@@ -64,18 +64,18 @@ func main() {
 		}
 		//string to int
 		qunayeZ, _ := strconv.Atoi(qunayeen)
-		qunayeS := qunayeZ*3 - 3
+		qunayeS := qunayeZ*10 - 10
 
 		sqlList := []TxlydSQL{}
 		questionlist := []MobaN{}
 		placelist := []MobaN{}
 		questiontypelist := []MobaN{}
 		countlist := []MobaN{}
-		db.Select(&sqlList, "SELECT id,starttime,endtime,question,place,questiontype,count,solvetime,note FROM txlyd limit ?,?", qunayeS, 3)
-		db.Select(&questionlist, "SELECT question_list FROM moban")
-		db.Select(&placelist, "SELECT place_list FROM moban")
-		db.Select(&questiontypelist, "SELECT questiontype_list FROM moban")
-		db.Select(&countlist, "SELECT count_list FROM moban")
+		db.Select(&sqlList, "SELECT id,starttime,endtime,question,place,questiontype,count,solvetime,note FROM txlyd limit ?,?", qunayeS, 10)
+		db.Select(&questionlist, "SELECT question_list FROM moban where count_list !='' group by question_list")
+		db.Select(&placelist, "SELECT place_list FROM moban where count_list !='' group by place_list")
+		db.Select(&questiontypelist, "SELECT questiontype_list FROM moban where count_list !='' group by questiontype_list")
+		db.Select(&countlist, "SELECT count_list FROM moban where count_list !='' group by count_list")
 
 		ctx.ViewData("sqll", sqlList)
 		ctx.ViewData("question_list", questionlist)
@@ -87,13 +87,43 @@ func main() {
 	app.Get("/delete", func(ctx iris.Context) {
 
 		deleteidL := ctx.FormValue("deleteid_l")
-		db.MustExec("delete from txlyd where id=?", deleteidL)
-		fmt.Printf("id为：%s 删除成功", deleteidL)
-		delid := ctx.FormValue("delid")
-		db.MustExec("delete from moban where id=?", delid)
-		fmt.Println("dell_moban_id:", delid)
-		ctx.Redirect("/question_list", iris.StatusTemporaryRedirect)
+		if deleteidL == "" {
+			delid := ctx.FormValue("delid")
+			db.MustExec("delete from moban where id=?", delid)
+			fmt.Println("dell_moban_id:", delid)
+			ctx.Redirect("/question_moban?", iris.StatusTemporaryRedirect)
+		} else {
+			db.MustExec("delete from txlyd where id=?", deleteidL)
+			fmt.Printf("id为：%s 删除成功", deleteidL)
+
+			ctx.Redirect("/question_list", iris.StatusTemporaryRedirect)
+		}
+
 	})
+	app.Get("/question_moban_update", func(ctx iris.Context) {
+		Updateid := ctx.FormValue("updateid")
+		updatesql := []MobaN{}
+		db.Select(&updatesql, "select * from moban where id = ?", Updateid)
+		ctx.ViewData("question_moban_update", updatesql)
+
+		wtnrg := ctx.FormValue("wtnrg")
+		wtddg := ctx.FormValue("wtddg")
+		wtysg := ctx.FormValue("wtysg")
+		fscsg := ctx.FormValue("fscsg")
+
+		if wtnrg == "" {
+			fmt.Println("空", Updateid)
+		} else {
+			qmid := ctx.FormValue("qmid")
+			fmt.Println("g:", qmid, wtnrg, wtddg, wtysg, fscsg)
+			db.MustExec("update moban set question_list=?,place_list=?,questiontype_list=?,count_list=? where id =?", wtnrg, wtddg, wtysg, fscsg, qmid)
+			ctx.Redirect("/question_moban/", iris.StatusTemporaryRedirect)
+		}
+
+		ctx.View("question_moban_update.html")
+
+	})
+
 	app.Post("/insert", func(ctx iris.Context) {
 
 		starttime := ctx.FormValue("starttime")
@@ -106,16 +136,16 @@ func main() {
 		if endtime == "" {
 			solvetimeS := "-"
 			db.MustExec("insert into txlyd(starttime, endtime, question, place, questiontype, count, solvetime,note) values(?,?,?,?,?,?,?,?)", starttime, endtime, question, place, questiontype, count, solvetimeS, note)
-			fmt.Println(starttime, endtime, question, place, questiontype, count, solvetimeS, note)
+			// fmt.Println(starttime, endtime, question, place, questiontype, count, solvetimeS, note)
 			ctx.Redirect("/question_list/?qunaye=", iris.StatusTemporaryRedirect)
 		} else {
 			starttimeT, _ := time.Parse("2006-01-02 15:04", starttime)
 			endtimeT, _ := time.Parse("2006-01-02 15:04", endtime)
 			solvetime := (endtimeT.Unix() - starttimeT.Unix()) / 60
 			solvetimeS := strconv.FormatInt(solvetime, 10) + "分钟"
-			fmt.Println(solvetimeS)
+			// fmt.Println(solvetimeS)
 			db.MustExec("insert into txlyd(starttime, endtime, question, place, questiontype, count, solvetime,note) values(?,?,?,?,?,?,?,?)", starttime, endtime, question, place, questiontype, count, solvetimeS, note)
-			fmt.Println(starttime, endtime, question, place, questiontype, count, solvetimeS, note)
+			// fmt.Println(starttime, endtime, question, place, questiontype, count, solvetimeS, note)
 			ctx.Redirect("/question_list/?qunaye=", iris.StatusTemporaryRedirect)
 		}
 
@@ -125,20 +155,42 @@ func main() {
 		qtddmb := ctx.FormValue("qtddmb")
 		wtlx := ctx.FormValue("wtlx")
 		fscs := ctx.FormValue("fscs")
-		fmt.Println(qtlbmb, qtddmb, wtlx, fscs)
+		// fmt.Println(qtlbmb, qtddmb, wtlx, fscs)
 		db.MustExec("insert into moban(question_list,place_list,questiontype_list,count_list) values(?,?,?,?)", qtlbmb, qtddmb, wtlx, fscs)
-		ctx.Redirect("/question_moban", iris.StatusTemporaryRedirect)
+		ctx.Redirect("/question_moban/", iris.StatusTemporaryRedirect)
 	})
 	app.Get("/question_moban", func(ctx iris.Context) {
 		questionxianshi := []MobaN{}
 		db.Select(&questionxianshi, "select * from moban")
-		fmt.Println("moban:", questionxianshi)
+		// fmt.Println("moban:", questionxianshi)
 		ctx.ViewData("question_xianshi", questionxianshi)
 
 		ctx.View("question_moban.html")
 
 	})
 
+	app.Post("/zhuce", func(ctx iris.Context) {
+		user := ctx.FormValue("user")
+		passwd := ctx.FormValue("passwd")
+		fmt.Println("zhuce:", user, passwd)
+		ctx.Redirect("/question_list/?qunaye=1", iris.StatusTemporaryRedirect)
+	})
+	app.Post("/login", func(ctx iris.Context) {
+		user := ctx.FormValue("lguser")
+		passwd := ctx.FormValue("lgpasswd")
+		fmt.Println("login:", user, passwd)
+		ctx.Redirect("/question_list/?qunaye=1", iris.StatusTemporaryRedirect)
+	})
+	app.Get("/search", func(ctx iris.Context) {
+		search := []TxlydSQL{}
+		searchnr := ctx.URLParams()["search_nr"]
+		db.Select(&search, "select * from txlyd where question like  '%"+searchnr+"%'")
+		// fmt.Println("search:", search)
+		ctx.ViewData("search_list", search)
+
+		ctx.View("search.html")
+
+	})
 	app.Get("/", func(ctx iris.Context) {
 		ctx.Redirect("question_list", iris.StatusTemporaryRedirect)
 	})
