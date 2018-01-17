@@ -90,6 +90,7 @@
   button:hover:before {
     left: 110%;
     transition: .3s;
+    
   }
   button:before {
     content: '';
@@ -108,7 +109,7 @@
 
 
   .invite {
-    background: linear-gradient(-45deg, #f857a6, #ff5858);
+    background: linear-gradient(-45deg, #57bdf8, #fa7de9);
     left: 50%;
   }
   
@@ -128,7 +129,7 @@
   }
   .nope:hover {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
-    transform: translateX(-50%);
+    transform: translateX(-25%);
   }
   .nope2 {
     background: #474747;

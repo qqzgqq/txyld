@@ -12,20 +12,21 @@
 
     </head>
 
-    <body style="background:#ffffff2d">   
-
+    <body class="background-pic">   
+    
+       
                         <div class="container-fluid" style="padding-left: 65px;" >
                                 <div class="row-fluid">
                                     <div class="span12">
                                         <ul class="nav nav-tabs">
                                             <li class="active">
-                                                <a href="/question_list?qunaye=" style="font-weight:bold">首页</a>
+                                                <a href="/question_list?qunaye=" style="font-weight:bold" class="btn btn-info">首页</a>
                                             </li>
                                             <li>
-                                                <a href="/question_moban">问题模板</a>
+                                                <a href="/question_moban" class="btn btn-info">问题模板</a>
                                             </li>
                                             <li>
-                                                <a href="/search">查询</a>
+                                                <a href="/search" class="btn btn-info">查询</a>
                                             </li>
                                             <li class="dropdown pull-right">
                                                  <a href="#" data-toggle="dropdown" class="dropdown-toggle">用户<strong class="caret"></strong></a>
@@ -103,7 +104,7 @@
                                             <td>{{.Solvetime}}</td>
                                             <td>{{.Note}}</td>                     
                                             <td>
-                                                <a href="/delete?deleteid_l={{.IDsql}}">删除</a>
+                                                <a href="/delete?deleteid_l={{.IDsql}}" class="btn btn-small btn-danger">删除</a>
                                            </td>
                                     </tr>
                                     {{end}}
@@ -137,14 +138,14 @@
                                         <td>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         </td>
-                                        <td>开始时间</td>
-                                        <td>结束时间</td>
-                                        <td>问题描述</td>
-                                        <td>问题地点</td>
-                                        <td>问题类型</td>
-                                        <td>出现次数</td>
+                                        <th>开始时间</th>
+                                        <th>结束时间</th>
+                                        <th>问题描述</th>
+                                        <th>问题地点</th>
+                                        <th>问题类型</th>
+                                        <th>出现次数</th>
                                     
-                                        <td>问题备注</td>
+                                        <th>问题备注</th>
 
                                     </tr>
                                     <tr>
@@ -202,10 +203,10 @@
                                             <input type="text" name="note" style="height: 30px;">
                                         </td>
                                         <td>
-                                                &nbsp;&nbsp;&nbsp;
+                                                &nbsp;
                                         </td>
                                         <td>
-                                                <button type="submit" class="btn">确认</button>
+                                                <button type="submit" class="btn btn-small btn-success">确认</button>
                                         </td>
                                     </tr>
                                
@@ -224,7 +225,7 @@
         
 
 
-        <script type="text/javascript">
+        <script>
             $(".form_datetime").datetimepicker({
                 linkFormat: "yyyy-mm-dd hh:ii",
                 autoclose: true,
