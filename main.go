@@ -202,8 +202,30 @@ func main() {
 	app.Get("/question_moban", func(ctx iris.Context) {
 		// s := sess.Start(ctx).GetString("name")
 		// if s != "" {
+		var pagem float64
+		db.Get(&pagem, "SELECT count(*) FROM moban ")
+		xsysm := 10.0
+		zxsysm := math.Ceil(pagem / xsysm)
+		zxsZm := int(zxsysm)
+		var aaam []int
+		for j := 0; j < zxsZm; j++ {
+			aaam = append(aaam, j+1)
+
+		}
+		ctx.ViewData("snamem", sess.Start(ctx).GetString("name"))
+		ctx.ViewData("sqlnumm", aaam)
+		//ctx.FormValue() must don't be null
+		qunayeenm := ctx.URLParams()["qunayem"]
+
+		if qunayeenm == "" {
+			qunayeenm = "1"
+		}
+		//string to int
+		qunayeZm, _ := strconv.Atoi(qunayeenm)
+		qunayeSm := qunayeZm*10 - 10
+
 		questionxianshi := []MobaN{}
-		db.Select(&questionxianshi, "select * from moban")
+		db.Select(&questionxianshi, "select * from moban limit ?,?", qunayeSm, 10)
 		// fmt.Println("moban:", questionxianshi)
 		ctx.ViewData("question_xianshi", questionxianshi)
 		ctx.ViewData("sname", sess.Start(ctx).GetString("name"))
@@ -254,9 +276,21 @@ func main() {
 		// s := sess.Start(ctx).GetString("name")
 		// if s != "" {
 		search := []TxlydSQL{}
+
 		searchnr := ctx.URLParams()["search_nr"]
-		db.Select(&search, "select * from txlyd where question like  '%"+searchnr+"%'")
-		// fmt.Println("search:", search)
+		starttimes := ctx.URLParams()["starttimes"]
+		endtimes := ctx.URLParams()["endtimes"]
+		fmt.Println("shijians:", starttimes, endtimes)
+		if starttimes == "" || endtimes == "" {
+			db.Select(&search, "select * from txlyd where question like  '%"+searchnr+"%'")
+		} else {
+			if searchnr == "" {
+				db.Select(&search, "select * from txlyd where starttime >= ? and endtime <= ?", starttimes, endtimes)
+			} else {
+				db.Select(&search, "select * from txlyd where starttime >= ? and endtime <= ? and question like  '%"+searchnr+"%'", starttimes, endtimes)
+			}
+		}
+
 		ctx.ViewData("search_list", search)
 		ctx.ViewData("sname", sess.Start(ctx).GetString("name"))
 		ctx.View("search.html")

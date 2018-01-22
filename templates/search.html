@@ -4,6 +4,7 @@
         <script src="/static/js/jquery.min.js"></script>
         <script src="/static/js/bootstrap.js"></script>
         <script src="/static/js/guang.js"></script>
+        <script src="/static/js/bootstrap-datetimepicker.min.js"></script>
         <link href="http://cdn.bootcss.com/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="/static/css/guang.css">
         <link href="/static/css/datetimepicker.css" rel="stylesheet">
@@ -27,8 +28,25 @@
                                     <div class="container-fluid">
                                             <div class="row-fluid">
                                                 <div class="span12">
-                                                    <form class="form-search" >
-                                                        <input class="input-medium search-query" type="text" placeholder="问题描述" name="search_nr"/> <button type="submit" class="btn btn-small btn-success" >查找</button>
+                                                    <form class="form-search" action="/search" method="get">
+                                                        <table>
+                                                            <tr>
+                                                                    <div class="input-append date form_datetime">
+                                                                            <input size="16" type="text" value="" name="starttimes" placeholder="开始时间" style="width: 130px;height: 30px;">
+                                                                            <span class="add-on"><i class="icon-th"></i></span>
+                                                                    </div>
+                                                            </tr>
+                                                            <tr>
+                                                                    <div class="input-append date form_datetime">
+                                                                            <input size="16" type="text" value="" name="endtimes" placeholder="结束时间" style="width: 130px;height: 30px;">
+                                                                            <span class="add-on"><i class="icon-th"></i></span>
+                                                                    </div>
+                                                            </tr>
+                                                            <tr>
+                                                                    <input class="input-medium search-query" type="text" placeholder="问题描述" name="search_nr"/> <button type="submit" class="btn btn-small btn-success" >查找</button>
+                                                            </tr>
+                                                        </table>
+                                                    
                                                     </form>
                                                 </div>
                                             </div>
@@ -121,6 +139,13 @@
             </div>
                     </td>
                 </table>
-               
+                <script>
+                    $(".form_datetime").datetimepicker({
+                        linkFormat: "yyyy-mm-dd hh:ii",
+                        autoclose: true,
+                        todayBtn: true,
+                        pickerPosition: "bottom-left"
+                    });
+                </script>       
     </body>
 </html>

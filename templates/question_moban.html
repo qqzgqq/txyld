@@ -114,10 +114,27 @@
             </td> 
             </table>
             
+            <table border="0">
+                    <td>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td>
+                            <div>
+                                    <!-- <a href="/first_y?firsty={{.firsty}}" class="btn">第一页</a> -->
+                                    {{range $a,$b:= .sqlnumm}}
+                                    <a href="/question_moban?qunayem={{$b}}" class="btn btn-mini">{{$b}}</a>
+                                    {{end}}
+                                </div>
+                    </td>
+               </table>
+
+
             <div>
                 <form action="/insert_moban" method="post">
                     <table>
+                    
                         <tr>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <td>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </td>
