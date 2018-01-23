@@ -308,9 +308,9 @@ func main() {
 	app.Get("/", func(ctx iris.Context) {
 		// s := sess.Start(ctx).GetString("name")
 		// if s != "" {
-		ctx.Redirect("question_list", iris.StatusTemporaryRedirect)
+		// ctx.Redirect("question_list", iris.StatusTemporaryRedirect)
 		// } else {
-		// ctx.Redirect("/static/login.html", iris.StatusTemporaryRedirect)
+		ctx.Redirect("/static/a.html", iris.StatusTemporaryRedirect)
 		// }
 	})
 
