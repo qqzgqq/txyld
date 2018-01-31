@@ -310,9 +310,9 @@ func main() {
 		// if s != "" {
 		// ctx.Redirect("question_list", iris.StatusTemporaryRedirect)
 		// } else {
-		ctx.Redirect("/static/a.html", iris.StatusTemporaryRedirect)
+		ctx.Redirect("/static/login.html", iris.StatusTemporaryRedirect)
 		// }
 	})
 
-	app.Run(iris.Addr(":6666"), iris.WithoutServerError(iris.ErrServerClosed))
+	app.Run(iris.Addr(":8080"), iris.WithoutServerError(iris.ErrServerClosed))
 }
