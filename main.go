@@ -43,7 +43,7 @@ type ZhuCe struct {
 }
 
 func main() {
-	db, _ := sqlx.Connect("mysql", "root:1q2w3e@tcp(127.0.0.1:3306)/guang?charset=utf8")
+	db, _ := sqlx.Connect("mysql", "root:1q2w3e@tcp(mysql:3306)/guang?charset=utf8")
 	app := iris.New()
 	app.RegisterView(iris.HTML("./templates", ".html"))
 	sess := sessions.New(sessions.Config{
