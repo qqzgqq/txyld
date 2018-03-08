@@ -1,0 +1,126 @@
+<html>
+    <head>
+        <title>同心联营点问题记录系统</title>
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/bootstrap.js"></script>
+        <script src="/static/js/guang.js"></script>
+        <script src="/static/js/bootstrap-datetimepicker.min.js"></script>
+        <link href="http://cdn.bootcss.com/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/guang.css">
+        <link href="/static/css/datetimepicker.css" rel="stylesheet">
+        <!-- 叫网页角标 -->
+        <link rel="shortcut icon" type="image/ico" href="/static/img/1.jpg">         
+
+    </head>
+
+    <body class="background-pic">   
+            <div class="container-fluid" style="padding-left: 65px;" >
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="/question_list?qunaye=" style="font-weight:bold" class="btn btn-info">首页</a>
+                                </li>
+                                <li>
+                                    <a href="/question_moban" class="btn btn-info">问题描述</a>
+                                </li>
+                                <li>
+                                    <div class="container-fluid">
+                                        <div class="row-fluid">
+                                            <div class="span12">
+                                                <form class="form-search" action="/huizong" method="get">
+                                                    <table>
+                                                        <tr>
+                                                                <div class="input-append date form_datetime">
+                                                                        <input size="16" type="text" value="" name="searchtimes" placeholder="月份统计" style="width: 130px;height: 30px;">
+                                                                        <span class="add-on"><i class="icon-th"> </i></span><button type="submit" class="btn btn-small btn-success" >查找</button>
+                                                                </div>
+                                                        </tr>
+                                                   
+                                                    </table>
+                                                
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                   
+                                <li class="dropdown pull-right">
+                                     <a href="#" data-toggle="dropdown" class="dropdown-toggle" class="btn btn-info">{{.sname}}<strong class="caret"></strong></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="/logout" class="btn btn-info">退出</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li  class="dropdown pull-right">
+                                        <img alt="140x140" src="/static/img/22.jpeg" class="img-circle" style="width: 50px;"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        <form action="/huizong" method="get">
+            <div class="container-fluid">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <p class="table-hover">
+                            </p>
+                            <p class="table-hover" style="text-align:center">
+                                <strong style="font-size:33px">{{.stime}}月份联营点问题汇总</strong>
+                            </p><hr class="table-hover" />
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr style="background-color:bisque">
+                                        <th>
+                                            联营点
+                                        </th>
+                                        <th>
+                                            问题类型
+                                        </th>
+                                        <th>
+                                            问题描述
+                                        </th>
+                                        <th>
+                                            发生次数
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {{range .hzxx}}
+                                    <tr class="warning">
+                                        
+                                        <td>
+                                                {{.Place}} 
+                                        </td>
+                                        <td>
+                                                {{.Question}}
+                                        </td>
+                                        <td>
+                                                {{.Questiontype}}
+                                        </td>
+                                        <td>
+                                                {{.Count}}
+                                        </td>
+                                    </tr>
+                                {{end}}   
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </form>
+                <script>
+                    $(".form_datetime").datetimepicker({
+                        format: "yyyy-mm",
+                        minView: "year",
+                        autoclose: true,
+                        // todayBtn: true,
+                        pickerPosition: "bottom-left"
+                    });
+                </script>  
+      
+                 
+    </body>
+</html>

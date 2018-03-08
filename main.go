@@ -26,6 +26,14 @@ type TxlydSQL struct {
 	Note         string `db:"note"`
 }
 
+// TxlydSQL2 mysql表txldy2
+type TxlydSQL2 struct {
+	Place        string `db:"place"`
+	Question     string `db:"question"`
+	Questiontype string `db:"questiontype"`
+	Count        string `db:"count"`
+}
+
 // MobaN mysql表moban
 type MobaN struct {
 	IDmoban          int    `db:"id"`
@@ -43,7 +51,7 @@ type ZhuCe struct {
 }
 
 func main() {
-	db, _ := sqlx.Connect("mysql", "root:1q2w3e@tcp(mysql:3306)/guang?charset=utf8")
+	db, _ := sqlx.Connect("mysql", "root:1q2w3e@tcp(127.0.0.1:3306)/guang?charset=utf8")
 	app := iris.New()
 	app.RegisterView(iris.HTML("./templates", ".html"))
 	sess := sessions.New(sessions.Config{
@@ -271,6 +279,24 @@ func main() {
 			ctx.HTML("用户不存在")
 		}
 
+	})
+	app.Get("/huizong", func(ctx iris.Context) {
+		Searchtimes := ctx.URLParams()["searchtimes"]
+		Today := time.Unix(time.Now().Unix(), 0).Format("2006-01")
+		Huizong := []TxlydSQL2{}
+		if Searchtimes == "" {
+			db.Select(&Huizong, "select place,question,questiontype,count from txlyd where starttime like '"+Today+"%' order by place")
+			ctx.ViewData("stime", Today)
+			ctx.ViewData("hzxx", Huizong)
+
+		} else {
+			fmt.Println("月份统计:", Searchtimes)
+			db.Select(&Huizong, "select place,question,questiontype,count from txlyd where starttime like '%"+Searchtimes+"%' order by place")
+			ctx.ViewData("stime", Searchtimes)
+			ctx.ViewData("hzxx", Huizong)
+		}
+		fmt.Println("chulai:", Today, Searchtimes)
+		ctx.View("huizong.html")
 	})
 	app.Get("/search", func(ctx iris.Context) {
 		// s := sess.Start(ctx).GetString("name")
