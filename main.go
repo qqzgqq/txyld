@@ -104,7 +104,7 @@ func main() {
 		placelist := []MobaN{}
 		questiontypelist := []MobaN{}
 		countlist := []MobaN{}
-		db.Select(&sqlList, "SELECT id,starttime,endtime,question,place,questiontype,count,solvetime,note FROM txlyd limit ?,?", qunayeS, 10)
+		db.Select(&sqlList, "SELECT id,starttime,endtime,question,place,questiontype,count,solvetime,note FROM txlyd order by starttime desc limit ?,?", qunayeS, 10)
 		db.Select(&questionlist, "SELECT question_list FROM moban where question_list !='' group by question_list")
 		db.Select(&placelist, "SELECT place_list FROM moban where place_list !='' group by place_list")
 		db.Select(&questiontypelist, "SELECT questiontype_list FROM moban where questiontype_list !='' group by questiontype_list")
